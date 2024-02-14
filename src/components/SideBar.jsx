@@ -15,7 +15,9 @@ import { Avatar, Typography, styled } from '@mui/material';
 import MuiDrawer from "@mui/material/Drawer";
 import { useTheme } from '@emotion/react';
 import { BarChartOutlined, CalendarTodayOutlined, ContactsOutlined, HelpOutlineOutlined, HomeOutlined, MapOutlined, PeopleOutlineOutlined, PersonOutlineOutlined, PieChartOutlineOutlined, ReceiptLongOutlined, TimelineOutlined } from '@mui/icons-material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import {grey} from '@mui/material/colors';
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -69,27 +71,29 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   
 
   const Array1=[
-    {"text":"Dashboard", "icon": <HomeOutlined/>,"patch":"/"},
-    {"text":"Manage Team", "icon": <PeopleOutlineOutlined/>,"patch":"/team"},
-    {"text":"Contacts Information", "icon": <ContactsOutlined/>,"patch":"/contacts"},
-    {"text":"Invoice Balances", "icon": <ReceiptLongOutlined/>,"patch":"/invoices"}, 
+    {"text":"Dashboard", "icon": <HomeOutlined/>,"path":"/"},
+    {"text":"Manage Team", "icon": <PeopleOutlineOutlined/>,"path":"/team"},
+    {"text":"Contacts Information", "icon": <ContactsOutlined/>,"path":"/contacts"},
+    {"text":"Invoice Balances", "icon": <ReceiptLongOutlined/>,"path":"/invoices"}, 
 ]
 
 const Array2=[
-    {"text":"Profile Form", "icon": <PersonOutlineOutlined/>,"patch":"/form"},
-    {"text":"Calendar", "icon": <CalendarTodayOutlined/>,"patch":"/calendar"},
-    {"text":"Faq Page", "icon": <HelpOutlineOutlined/>,"patch":"/faq"},
+    {"text":"Profile Form", "icon": <PersonOutlineOutlined/>,"path":"/form"},
+    {"text":"Calendar", "icon": <CalendarTodayOutlined/>,"path":"/calendar"},
+    {"text":"Faq Page", "icon": <HelpOutlineOutlined/>,"path":"/faq"},
 ]
 
 const Array3=[
-    {"text":"Bar Chart", "icon": <BarChartOutlined/>,"patch":"/bar"},
-    {"text":"Pie Chart", "icon": <PieChartOutlineOutlined/>,"patch":"/pie"},
-    {"text":"Line Chart", "icon": <TimelineOutlined/>,"patch":"/line"},
-    {"text":"Geography Chart", "icon": <MapOutlined/>,"patch":"/geography"}, 
+    {"text":"Bar Chart", "icon": <BarChartOutlined/>,"path":"/bar"},
+    {"text":"Pie Chart", "icon": <PieChartOutlineOutlined/>,"path":"/pie"},
+    {"text":"Line Chart", "icon": <TimelineOutlined/>,"path":"/line"},
+    {"text":"Geography Chart", "icon": <MapOutlined/>,"path":"/geography"}, 
 ]
 
 
 const SideBar=({open, handleDrawerClose})=> {
+  let location = useLocation();
+    const navigate = useNavigate();
     const theme = useTheme();
   return (
     <Drawer variant="permanent" open={open}>
@@ -106,18 +110,22 @@ const SideBar=({open, handleDrawerClose})=> {
     <Avatar sx={{mx:"auto", width:open ? 88: 44, height: open? 88: 44,my:1, border:"2px solid grey", transition:"0.25s"}} alt="Remy Sharp" 
     src="https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj" />
 <Typography align='center' sx={{fontSize:open? 13: 0,transition:"0.25s"}}>Muhdin</Typography>
-<Typography align='center' sx={{fontSize:open? 14: 0,transition:"0.25s"}}>Admin</Typography>
+<Typography align='center' sx={{fontSize:open? 14: 0,transition:"0.25s", color:theme.palette.info.main}}>Admin</Typography>
 
 
     <Divider />
     <List>
       {Array1.map((item) => (
-        <ListItem key={item.patch} disablePadding sx={{ display: "block" }}>
+        <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
           <ListItemButton
+          onClick={() => {
+            navigate(item.path)
+          }}
             sx={{
               minHeight: 48,
               justifyContent: open ? "initial" : "center",
               px: 2.5,
+              bgcolor:location.pathname=== item.path? theme.palette.mode==="dark"? grey[800]:grey[100]:null
             }}
           >
             <ListItemIcon
@@ -143,8 +151,11 @@ const SideBar=({open, handleDrawerClose})=> {
 
     <List>
       {Array2.map((item) => (
-        <ListItem key={item.patch} disablePadding sx={{ display: "block" }}>
+        <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
           <ListItemButton
+           onClick={() => {
+            navigate(item.path)
+          }}
             sx={{
               minHeight: 48,
               justifyContent: open ? "initial" : "center",
@@ -172,8 +183,11 @@ const SideBar=({open, handleDrawerClose})=> {
 
     <List>
       {Array3.map((item) => (
-        <ListItem key={item.patch} disablePadding sx={{ display: "block" }}>
+        <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
           <ListItemButton
+           onClick={() => {
+            navigate(item.path)
+          }}
             sx={{
               minHeight: 48,
               justifyContent: open ? "initial" : "center",
